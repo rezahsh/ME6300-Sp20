@@ -1,0 +1,6 @@
+LES simulation of a 3D spatial mixing layer using OpenFOAM
+Case: NASA ML2D case (https://turbmodels.larc.nasa.gov/delvilleshear_val.html)
+
+First, run the Python script forctable.py to generate velocity fluctuation tables where are read by 0/U
+*** Note that parameters within forctable.py should be consistent with the case input parameters 
+

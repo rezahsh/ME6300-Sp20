@@ -1,0 +1,148 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  dev
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 0.001;
+
+vertices
+(
+    (0 -300  -50)
+    (0 -45 -50)
+    (0 0 -50)
+    (0 45 -50)
+    (0 300 -50)
+    (1200 -300  -50)
+    (1200 -45 -50)
+    (1200 0 -50)
+    (1200 45 -50)
+    (1200 300 -50)
+
+    (0 -300  50)
+    (0 -45 50)
+    (0 0 50)
+    (0 45 50)
+    (0 300 50)
+    (1200 -300  50)
+    (1200 -45 50)
+    (1200 0 50)
+    (1200 45 50)
+    (1200 300 50)
+
+);
+
+blocks
+(
+    hex (0 5 6 1 10 15 16 11)
+    (80 17 10)
+    simpleGrading (1 1 1)
+
+    hex (1 6 7 2 11 16 17 12)
+    (80 3 10)
+    simpleGrading (1 1 1)
+
+    hex (2 7 8 3 12 17 18 13)
+    (80 3 10)
+    simpleGrading (1 1 1)
+
+    hex (3 8 9 4 13 18 19 14)
+    (80 17 10)
+    simpleGrading (1 1 1)
+);
+
+edges
+(
+);
+
+boundary
+(
+    inletTop
+    {
+        type patch;
+        faces
+        (
+            (3 13 14 4)
+        );
+    }
+    inletTopMiddle
+    {
+        type patch;
+        faces
+        (
+            (2 12 13 3)
+        );
+    }
+
+    inletBottomMiddle
+    {
+        type patch;
+        faces
+        (
+            (1 11 12 2)
+        );
+    }
+    inletBottom
+    {
+        type patch;
+        faces
+        (
+            (0 10 11 1)
+        );
+    }
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (5 6 16 15)
+            (6 7 17 16)
+            (7 8 18 17)
+            (8 9 19 18)
+        );
+    }
+    upperWall
+    {
+        type zeroGradient;
+        faces
+        (
+            (4 14 19 9)
+        );
+    }
+    lowerWall
+    {
+        type zeroGradient;
+        faces
+        (
+            (0 5 15 10)
+        );
+    }
+    frontAndBack
+    {
+        type empty;
+        faces
+        (
+            (0 1 6 5)
+            (1 2 7 6)
+            (2 3 8 7)
+            (3 4 9 8)
+
+            (10 15 16 11)
+            (11 16 17 12)
+            (12 17 18 13)
+            (13 18 19 14)
+        );
+    }
+);
+
+// ************************************************************************* //

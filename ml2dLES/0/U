@@ -1,0 +1,97 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  dev
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+utop 41.54;
+ubot 22.4;
+uave #calc "0.5*($utop+$ubot)";
+
+
+internalField   uniform ($uave 0 0);
+
+
+boundaryField
+{
+    inletTop
+    {
+        type            fixedValue;
+        value           uniform ($utop 0 0);
+    }
+    inletTopMiddle
+    {
+        type            uniformFixedValue;
+         uniformValue 
+         {
+                type      tableFile;
+                file      "tableutop.dat";
+         }
+
+/*  // sine wave fluctuations
+        uniformValue sine;
+        uniformValueCoeffs
+        {
+           frequency $freq;
+           amplitude (0 $amp 0);
+           //scale (0 1 0);
+           level ($utop 0 0);
+        }*/
+/* // turbulent inlet fluctuations
+        type            turbulentInlet;
+        referenceField  uniform ($ubot 0 0);
+        fluctuationScale (0.01 0.02 0.01);
+        value           uniform ($ubot 0 0);
+*/
+
+    }
+
+    inletBottom
+    {
+        type            fixedValue;
+        value           uniform ($ubot 0 0);
+    }
+    inletBottomMiddle
+    {
+        type            uniformFixedValue;
+         uniformValue 
+         {
+                type      tableFile;
+                file      "tableubot.dat";
+         }
+    }
+
+    outlet
+    {
+          type            zeroGradient;
+    }
+
+    upperWall
+    {
+        type            zeroGradient;
+    }
+
+    lowerWall
+    {
+        type            zeroGradient;
+    }
+
+    frontAndBack
+    {
+        type            empty;
+    }
+}
+
+// ************************************************************************* //
